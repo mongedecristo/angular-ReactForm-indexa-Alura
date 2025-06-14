@@ -1,0 +1,115 @@
+<app-container>
+  <header>
+    <section class="cabecalho-link">
+      <img src="assets/logo.png" alt="">
+    </section>
+    <section class="cabecalho-contato">
+      <img src="assets/adicionar-contato.png" alt="">
+      <h1>Adicionar contato</h1>
+    </section>
+  </header>
+
+  <form [formGroup]="contatoForm" (ngSubmit)="salvarContato()">
+    <label for="nome">Nome</label>
+    <input
+      type="text" id="nome" name="nome"
+      placeholder="Digite o nome do contato"
+      formControlName="nome"
+    />
+    @if (contatoForm.get('nome')?.hasError('required') && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        Campo nome é obrigatório.
+      </div>
+    }
+    @if (contatoForm.get('nome')?.hasError('minlength') && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        Campo nome deve ter no mínimo 3 caracteres.
+      </div>
+    }
+
+    <label for="telefone">Telefone</label>
+    <input
+      type="text" id="telefone" name="telefone"
+      placeholder="Digite o telefone do contato"
+      formControlName="telefone"
+    />
+    @if (contatoForm.get('telefone')?.hasError('required') && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        Campo telefone é obrigatório
+      </div>
+    }
+    @if (contatoForm.get('telefone')?.hasError('telefoneInvalido') && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        Campo telefone deve estar no formato (XX) XXXXX-XXXX
+      </div>
+    }
+
+    <label for="email">Email</label>
+    <input
+      type="email" id="email" name="email"
+      placeholder="Digite o email do contato"
+      formControlName="email"
+    />
+    @if (contatoForm.get('email')?.hasError('required') && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        Campo email é obrigatório
+      </div>
+    }
+    @if (contatoForm.get('email')?.hasError('email') && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        Campo email deve estar no formato email&#64;dominio
+      </div>
+    }
+
+    <app-separador></app-separador>
+
+    <label for="aniversario">Aniversario</label>
+    <input
+      type="date" id="aniversario" name="aniversario"
+      placeholder="Data de nascimento"
+      formControlName="aniversario"
+    />
+    @if (contatoForm.get('aniversario')?.hasError('dataInvalida')) {
+      <div class="mensagem-erro">
+        Data de aniversário inválida
+      </div>
+    }
+    @if (contatoForm.get('aniversario')?.hasError('dataMenor')) {
+      <div class="mensagem-erro">
+        Idade mínima de 12 anos para se cadastrar
+      </div>
+    }
+
+    <label for="redes">Redes Sociais</label>
+    <div class="input-container">
+      <span class="span-http">http://</span>
+      <input
+        type="text" id="redes" name="redes"
+        placeholder="Adicione a URL da página"
+        formControlName="redes"
+      />
+    </div>
+    <!-- Opcionalmente dá pra usar .erros.[array de erros] -->
+    <!-- control.errors = { required: true, minlength: true }; -->
+    @if (contatoForm.get('redes')?.errors?.['minlength'] && contatoForm.get('telefone')?.touched) {
+      <div class="mensagem-erro">
+        URL inválida. Deve conter no mínimo 5 caracteres
+      </div>
+    }
+
+    <label for="obs">Observações</label>
+    <textarea
+      type="text"
+      id="obs" name="obs"
+      placeholder='Coloque observações nesse espaço. Exemplo: "Instrutora da academia "Nova Imagem", amiga da Júlia".'
+      formControlName="obs"
+    >
+    </textarea>
+
+    <section class="botoes">
+      <button type="button" class="botao-cancelar" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="botao-salvar">Salvar contato</button>
+    </section>
+  </form>
+</app-container>
+
