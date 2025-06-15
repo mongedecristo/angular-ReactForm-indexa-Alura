@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contato } from '../../shared/types';
 import { FormsModule } from '@angular/forms';
@@ -26,14 +26,17 @@ import { ContatoService } from '../../services/contato.service';
   templateUrl: './lista-contatos.component.html',
   styleUrl: './lista-contatos.component.css'
 })
-export class ListaContatosComponent {
+export class ListaContatosComponent implements OnInit {
 alfabeto: string = 'abcdefghijklmnopqrstuvwxyz'
-  contatos: Contato[] = agenda; // Deixei a agenda ali como exemplo.
+  contatos: Contato[] = [];
 
   filtroPorTexto: string = ''
 
   constructor(private contatoService: ContatoService) {
-    this.contatoService.obterContatos();
+  }
+
+  ngOnInit() {
+    this.contatos = this.contatoService.obterContatos();
   }
 
   // Remove os acentos de uma string
