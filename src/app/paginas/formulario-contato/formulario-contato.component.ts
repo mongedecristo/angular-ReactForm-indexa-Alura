@@ -35,7 +35,7 @@ export class FormularioContatoComponent {
       email: new FormControl('', [
         Validators.required,
         Validators.email]),
-      aniversario: new FormControl('', [
+      aniversario: new FormControl<Date>(new Date, [
         Validators.required,
         FormularioContatoComponent.dataBrasileiraValidator,
         FormularioContatoComponent.dataNascimentoValidator
@@ -45,6 +45,7 @@ export class FormularioContatoComponent {
       ]),
       obs: new FormControl('')
     });
+    this.reset();
   }
 
   private static dataBrasileiraValidator(control: AbstractControl): ValidationErrors | null {
@@ -62,6 +63,7 @@ export class FormularioContatoComponent {
       return null;
     }
     const dataFormatada = moment(data, 'DD/MM/YYYY');
+    console.log('Data formatada:', dataFormatada.format('DD/MM/YYYY'));
     const isValid = FormularioContatoComponent.testandoDataDeNascimento(dataFormatada.format('DD/MM/YYYY'));
     return isValid ? null : { 'dataMenor': true };
   }
@@ -84,10 +86,13 @@ export class FormularioContatoComponent {
     } else {
       console.log('Formulário inválido. Verifique os campos.');
       console.log(this.contatoForm.value);
+      console.log(this.contatoForm.get('aniversario')?.errors);
+      console.log(this.contatoForm.get('aniversario')?.value);
+      console.log(typeof this.contatoForm.get('aniversario')?.value);
     }
   }
 
-  public cancelar(): void {
+  public reset(): void {
     this.contatoForm.reset();
     console.log('Formulário cancelado');
   }

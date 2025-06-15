@@ -2,6 +2,10 @@
   <header>
     <section class="cabecalho-link">
       <img src="assets/logo.png" alt="">
+      <button>
+        <img class="seta" src="assets/arrow-left.png" alt="">
+        <a routerLink="/lista-contatos">Voltar</a>
+      </button>
     </section>
     <section class="cabecalho-contato">
       <img src="assets/adicionar-contato.png" alt="">
@@ -69,7 +73,7 @@
       placeholder="Data de nascimento"
       formControlName="aniversario"
     />
-    @if (contatoForm.get('aniversario')?.hasError('dataInvalida')) {
+    @if (contatoForm.get('aniversario')?.hasError('dataInvalida') && contatoForm.get('aniversario')?.touched) {
       <div class="mensagem-erro">
         Data de aniversário inválida
       </div>
@@ -107,8 +111,13 @@
     </textarea>
 
     <section class="botoes">
-      <button type="button" class="botao-cancelar" (click)="cancelar()">Cancelar</button>
-      <button type="submit" class="botao-salvar">Salvar contato</button>
+      <button type="button" class="botao-cancelar" (click)="reset()">Cancelar</button>
+      <button
+        type="submit"
+        [ngClass]="contatoForm.valid ? 'botao-salvar' : 'botao-desabilitado'"
+        [disabled]="contatoForm.invalid">
+        Salvar contato
+      </button>
     </section>
   </form>
 </app-container>
