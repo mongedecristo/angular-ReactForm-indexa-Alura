@@ -6,6 +6,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validatio
 import { Uteis } from '../../shared/Uteis';
 import { ContatoService } from './../../services/contato.service';
 import moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario-contato',
@@ -23,7 +24,9 @@ export class FormularioContatoComponent implements OnInit {
 
   contatoForm!: FormGroup;
 
-  constructor(private contatoService: ContatoService) {
+  constructor(
+    private contatoService: ContatoService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -67,6 +70,7 @@ export class FormularioContatoComponent implements OnInit {
       console.log('Contato salvo:', novoContato);
       this.contatoService.salvarContato(novoContato);
       this.contatoForm.reset();
+      this.router.navigateByUrl('/lista-contatos');
     } else {
       console.log('Formulário inválido. Verifique os campos.');
       console.log(this.contatoForm.value);

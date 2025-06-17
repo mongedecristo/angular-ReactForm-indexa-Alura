@@ -8,7 +8,6 @@ import { ContainerComponent } from '../../componentes/container/container.compon
 import { CabecalhoComponent } from '../../componentes/cabecalho/cabecalho.component';
 import { SeparadorComponent } from '../../componentes/separador/separador.component';
 import { ContatoComponent } from '../../componentes/contato/contato.component';
-import agenda from '../../agenda.json';
 import { ContatoService } from '../../services/contato.service';
 
 @Component({
